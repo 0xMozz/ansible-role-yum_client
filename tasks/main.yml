@@ -1,0 +1,12 @@
+---
+- name: Update /etc/yum.repos.d files
+  include_tasks: yum.yml
+  when: ansible_os_family == "RedHat"
+
+- name: Update yum packages
+  include_tasks: update.yml
+  when: yum_update_packages
+
+- name: Install and configure yum-cron
+  include_tasks: yum-cron.yml
+  when: yum_cron_enabled

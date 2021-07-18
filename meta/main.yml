@@ -1,0 +1,12 @@
+---
+galaxy_info:
+  name: ansible-role-yum_client
+  author: mjgoble
+  description: Deploy custom .repo files to CentOS/RHEL clients
+  company: NZDF
+  min_ansible_version: 2.9
+  platforms:
+    - name: EL
+      versions:
+        - 7
+

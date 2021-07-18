@@ -1,0 +1,26 @@
+---
+- name: Update yum packages
+  yum:
+    name: "*"
+    state: latest
+  when: yum_update_packages
+  
+# Note. This code is run again due to CentOS replacing the .repo files after some major updates.
+# There's probably a better way to do this, but oh well.
+- name: Find old yum repo files
+  find:
+    paths: "{{ yum_repo_directory }}/"
+    patterns: "*.repo"
+  register: repo_files_to_delete
+
+- name: Delete old yum repo files
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ repo_files_to_delete.files }}"
+  when: yum_repo_remove_old_repo_files
+
+- name: Create new {{ yum_repo_file_name }}.repo file
+  template:
+    src: repository.repo.j2
+    dest: "{{ yum_repo_directory }}/{{ yum_repo_file_name }}"

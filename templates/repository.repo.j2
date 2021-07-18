@@ -1,0 +1,52 @@
+# {{ ansible_managed }}
+
+{% if yum_repo_enable_base %}
+[base]
+name=TEMSS Linux Repo - Base
+baseurl={{ yum_repo_host_url }}/$releasever/os/$basearch/
+enabled={{ yum_repo_enable_base }}
+gpgcheck={{ yum_enable_gpgcheck }}
+{% endif %}
+
+{% if yum_repo_enable_updates %}
+[updates]
+name=TEMSS Linux - Updates
+baseurl={{ yum_repo_host_url }}/$releasever/updates/$basearch/
+enabled={{ yum_repo_enable_updates }}
+gpgcheck={{ yum_enable_gpgcheck }}
+{% endif %}
+
+{% if yum_repo_enable_extras %}
+[extras]
+name=TEMSS Linux Repo - Extras
+baseurl={{ yum_repo_host_url }}/$releasever/extras/$basearch/
+enabled={{ yum_repo_enable_extras }}
+gpgcheck={{ yum_enable_gpgcheck }}
+{% endif %}
+
+{% if yum_repo_enable_centosplus %}
+[centosplus]
+name=TEMSS Linux Repo - Plus
+baseurl={{ yum_repo_host_url }}/$releasever/centosplus/$basearch/
+enabled={{ yum_repo_enable_centosplus }}
+gpgcheck={{ yum_enable_gpgcheck }}
+{% endif %}
+
+{% if yum_repo_enable_epel %}
+[epel]
+name=TEMSS Linux Repo - EPEL
+baseurl={{ epel_repo_host_url }}/$releasever/$basearch/
+enabled={{ yum_repo_enable_epel }}
+gpgcheck={{ yum_enable_gpgcheck }}
+{% endif %}
+
+{% if yum_repo_custom_repos | length > 0 %}
+{% for repo in yum_repo_custom_repos %}
+[{{ repo.name }}]
+name={{ repo.description }}
+baseurl={{ repo.base_url }}
+enabled={{ repo.enabled }}
+gpgcheck={{ repo.gpgcheck }}
+
+{% endfor %}
+{% endif %}

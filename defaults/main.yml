@@ -1,0 +1,66 @@
+---
+# Whether or not to remove all the .repo files located in /etc/yum.repos.d
+# This is useful if clearing out old repo files and also removing the default CentOS* .repo files
+yum_repo_remove_old_repo_files: false
+
+# Whether or not to run a yum update after the repo files have been configured.
+yum_update_packages: false
+
+# Filename and directory for new .repo files
+yum_repo_file_name: rhel.repo
+yum_repo_directory: /etc/yum.repos.d
+
+# Repository settings
+# Note, the following urls would end up looking like this in a repo file:
+# https://yum.example.com/centos/$releasever/os/$basearch/
+
+yum_repo_host_url: https://yum.example.com/centos
+epel_repo_host_url: https://epel.example.com/epel
+
+
+# Whether or not to enable gpgchecks
+# TODO: Look into how to do gpgchecks on repositories properly
+# 0= disabled, 1=enabled
+yum_enable_gpgcheck: 0
+
+# These are the normal yum repositories that are pretty standard for CentOS/RHEL
+# Base, Extras, Updates, Centosplus and EPEL can be enabled or disabled as desired.
+# 0= disabled, 1=enabled
+yum_repo_enable_base: 1
+yum_repo_enable_updates: 1
+yum_repo_enable_extras: 0
+yum_repo_enable_centosplus: 0
+yum_repo_enable_epel: 0
+
+# Add extra repos, e.g docker-ce
+# Note, for enabled and gpgcheck: 0=disabled, 1=enabled
+yum_repo_custom_repos: []
+  # - name: docker-ce
+  #   description: Docker CE Stable - $basearch
+  #   base_url:  "https://download.docker.com/docker-ce/centos/$releasever/$basearch/stable"
+  #   enabled: 1
+  #   gpgcheck: 0
+
+
+# yum-cron settings
+yum_cron_enabled: false
+
+#  What kind of update to use:
+# default                            = yum upgrade
+# security                           = yum --security upgrade
+# security-severity:Critical         = yum --sec-severity=Critical upgrade
+# minimal                            = yum --bugfix update-minimal
+# minimal-security                   = yum --security update-minimal
+# minimal-security-severity:Critical =  --sec-severity=Critical update-minimal
+yum_cron_update_cmd: default
+
+# Whether a message should be emitted when updates are available,
+# were downloaded, or applied
+yum_cron_update_messages: "yes"
+
+# Whether updates should be downloaded when they are available.
+yum_cron_download_updates: "yes"
+
+# Whether updates should be applied when they are available.  Note
+# that download_updates must also be yes for the update to be applied.
+yum_cron_apply_updates: "yes"
